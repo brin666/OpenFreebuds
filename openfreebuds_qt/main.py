@@ -168,8 +168,9 @@ class OfbQtApplication(IOfbQtApplication):
 
         if locale == "auto":
             locale = QLocale.system().name()
+        locale = locale.replace("_", "-")
         if locale not in available_locales:
-            locale = locale.split("_")[0]
+            locale = locale.split("-")[0]
             if locale not in available_locales:
                 locale = "en"
 

@@ -14,23 +14,35 @@
    <string notr="true">Form</string>
   </property>
   <property name="autoFillBackground">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">QLabel {
+   <string notr="true">QWidget#ListItem {
+	background: transparent;
+	border: none;
+}
+
+QLabel {
 	padding: 8px 12px;
-	background: palette(base);
+	background: transparent;
+	color: #6d8094;
+	border-radius: 12px;
 }
 
 QLabel:hover {
-	background: palette(alternate-base );
+	background: #edf3f7;
+	color: #425d76;
 }
 
 QLabel[itemActive=&quot;true&quot;],
-QLabel:hover[itemActive=&quot;true&quot;],
+QLabel:hover[itemActive=&quot;true&quot;] {
+	background: #e5eff6;
+	color: #315d82;
+	font-weight: 600;
+}
+
 QLabel:focus {
-	background: palette(highlight);
-	color: palette(highlighted-text);
+	border: 1px solid #82abc9;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">

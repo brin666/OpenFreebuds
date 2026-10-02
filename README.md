@@ -17,6 +17,8 @@
 </p>
 </div>
 
+> **FreeBuds 7i adaptation:** This fork is a derivative work based on [OpenFreebuds](https://github.com/melianmiko/OpenFreebuds), licensed under GPL-3.0. It adds a battery-only HUAWEI FreeBuds 7i profile for left, right, and case battery reporting; other 7i controls have not been verified.
+
 This application allows to control HUAWEI FreeBuds earphone settings from PC. Check exact battery level, toggle noise cancellation, control built-in equalizer, change gestures, and all other in-device settings and features are now available without official mobile application.
 
 Features
@@ -61,6 +63,7 @@ If your device isn't listed here, you could try to use it with profile for other
   - **HONOR Earbuds 2 / 2 SE / 2 Lite** is same
 - [HUAWEI FreeBuds 5i](./docs/devices/HUAWEI_FreeBuds_5i.md)
 - [HUAWEI FreeBuds 6i](./docs/devices/HUAWEI_FreeBuds_6i.md)
+- [HUAWEI FreeBuds 7i](./docs/devices/HUAWEI_FreeBuds_7i.md) (battery only)
 - [HUAWEI FreeBuds Pro](./docs/devices/HUAWEI_FreeBuds_Pro.md)
 - [HUAWEI FreeBuds Pro 2](./docs/devices/HUAWEI_FreeBuds_Pro_2.md)
 - [HUAWEI FreeBuds Pro 3](./docs/devices/HUAWEI_FreeBuds_Pro_3.md)

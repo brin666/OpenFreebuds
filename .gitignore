@@ -16,6 +16,26 @@
 /build
 /dist
 
+# Local caches and generated files
+/.pdm-build
+/.pytest_cache
+/.ruff_cache
+/.mypy_cache
+*.py[cod]
+*.log
+
+# Local credentials and device-specific runtime data
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+
+# Design exports may contain screenshots with device identifiers
+/design/
+
 # Portable mode data
 /data
 /is_portable

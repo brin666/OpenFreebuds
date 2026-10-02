@@ -2,7 +2,7 @@ from typing import Optional
 
 from PyQt6.QtCore import pyqtSlot, Qt
 from PyQt6.QtGui import QKeyEvent
-from PyQt6.QtWidgets import QWidget, QBoxLayout
+from PyQt6.QtWidgets import QWidget, QBoxLayout, QVBoxLayout
 
 from openfreebuds_qt.utils.qt_utils import widget_with_layout
 from openfreebuds_qt.app.widget import OfbQListItem
@@ -11,10 +11,11 @@ from openfreebuds_qt.app.widget.list_header import OfbQListHeader
 
 class OfbQtSettingsTabHelper:
     class Entry:
-        def __init__(self, label: str, content: QWidget, section):
+        def __init__(self, label: str, content: QWidget, display_content: QWidget, section):
             self.label = label
             self.list_item = OfbQListItem(section.root, section.root.tr(label))
-            self.content = content
+            self.content = display_content
+            self.focus_widget = content
             self.section: OfbQtSettingsTabHelper.Section = section
 
             section.root_layout.addWidget(self.list_item)
@@ -60,7 +61,7 @@ class OfbQtSettingsTabHelper:
         new_active = self._sections[section].items[tab]
         new_active.list_item.set_active(True)
         new_active.content.setVisible(True)
-        new_active.content.setFocus()
+        new_active.focus_widget.setFocus()
 
         self._active_entry = new_active
 
@@ -71,8 +72,20 @@ class OfbQtSettingsTabHelper:
     def add_tab(self, label: str, content: QWidget):
         section_num = len(self._sections) - 1
         tab = len(self._sections[section_num].items)
+
+        display_content = content
+        if content.property("secondarySettingsPage") == "true":
+            display_content = QWidget(self.root)
+            display_content.setObjectName("settingsPageFrame")
+            display_content.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+            frame_layout = QVBoxLayout(display_content)
+            frame_layout.setContentsMargins(16, 16, 16, 16)
+            frame_layout.setSpacing(0)
+            frame_layout.addWidget(content)
+
         entry = OfbQtSettingsTabHelper.Entry(label=label,
                                              content=content,
+                                             display_content=display_content,
                                              section=self._sections[section_num])
 
         @pyqtSlot()
@@ -90,8 +103,8 @@ class OfbQtSettingsTabHelper:
 
         entry.list_item.label.mousePressEvent = _activate
         entry.list_item.label.keyPressEvent = _kbd_activate
-        self.root_layout.addWidget(content)
-        content.setVisible(False)
+        self.root_layout.addWidget(display_content)
+        display_content.setVisible(False)
 
         return entry
 

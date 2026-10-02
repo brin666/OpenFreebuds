@@ -68,7 +68,10 @@ class OfbQtDeviceControlViewHelper:
         if event.kind_match(OfbEventKind.STATE_CHANGED):
             state = await self.ofb.get_state()
             visible = state == IOpenFreebuds.STATE_CONNECTED
-            self.ui.control_root.setVisible(visible)
+            # Battery and ANC controls are hosted by the device overview page.
+            # Keep the legacy sidebar container hidden while continuing to use
+            # this helper to update the underlying controls and device state.
+            self.ui.control_root.setVisible(False)
             force_render = True
 
             title = "OpenFreebuds"

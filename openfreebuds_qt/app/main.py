@@ -18,8 +18,10 @@ from openfreebuds_qt.app.helper.update_widget_helper import OfbQtUpdateWidgetHel
 from openfreebuds_qt.app.module import OfbQtAboutModule, OfbQtSoundQualityModule, OfbQtLinuxExtrasModule, \
     OfbQtHotkeysModule, OfbQtGesturesModule, OfbQtDualConnectModule, OfbQtDeviceOtherSettingsModule, \
     OfbQtDeviceInfoModule, OfbQtCommonModule, OfbQtChooseDeviceModule, OfbQtUiSettingsModule, OfbQtAutomationModule
+from openfreebuds_qt.app.module.device_overview import OfbQtDeviceOverviewModule
 from openfreebuds_qt.config import ConfigLock, OfbQtConfigParser
 from openfreebuds_qt.app.module.tray_battery import OfbQtTrayBatteryModule
+from openfreebuds_qt.app.settings_theme import SETTINGS_PAGE_STYLE
 from openfreebuds_qt.constants import ASSETS_PATH, LINK_RPC_HELP, LINK_WEBSITE_HELP, WIN32_BODY_STYLE
 from openfreebuds_qt.designer.main_window import Ui_OfbMainWindowDesign
 from openfreebuds_qt.generic import IOfbQtApplication, IOfbMainWindow
@@ -39,10 +41,57 @@ class OfbQtMainWindow(Ui_OfbMainWindowDesign, IOfbMainWindow):
 
         self.setupUi(self)
 
+        self.resize(1280, 820)
+        self.setMinimumSize(1080, 700)
+        self.scrollArea.setMinimumWidth(230)
+        self.scrollArea.setMaximumWidth(230)
+        self.widget.setObjectName("brandHeader")
+
+        self.setStyleSheet(self.styleSheet() + """
+            QMainWindow { background: #eef3f7; }
+            QScrollArea#scrollArea, QScrollArea#body {
+                border: none;
+                background: transparent;
+            }
+            QWidget#side_panel_content {
+                background: #f5f8fa;
+                border: none;
+            }
+            QWidget#tabs_list_content {
+                background: transparent;
+                border: none;
+            }
+            QWidget#body_content {
+                background: #eef3f7;
+                border: none;
+            }
+            QWidget#brandHeader {
+                background: rgba(255, 255, 255, 190);
+                border: 1px solid #ffffff;
+                border-radius: 13px;
+            }
+            QWidget#brandHeader QLabel {
+                color: #3e556c;
+            }
+            QPushButton#extra_options_button {
+                background: transparent;
+                border: none;
+                border-radius: 10px;
+            }
+            QPushButton#extra_options_button:hover {
+                background: #e9f0f5;
+            }
+        """)
+        self.scrollArea.viewport().setStyleSheet("background: #f5f8fa; border: none;")
+        self.body.viewport().setStyleSheet("background: #eef3f7; border: none;")
+
         # Win32 staff
         self.setWindowIcon(QIcon(str(ASSETS_PATH / "pw.mmk.OpenFreebuds.png")))
-        if sys.platform == "win32":
-            self.body_content.setStyleSheet(WIN32_BODY_STYLE)
+        body_style = WIN32_BODY_STYLE if sys.platform == "win32" else ""
+        self.body_content.setStyleSheet(
+            body_style + "\n" + SETTINGS_PAGE_STYLE + "\n"
+            "QWidget#body_content { background: #eef3f7; color: #31485e; }"
+        )
 
         # Extras button
         self.extra_options_button.setIcon(
@@ -71,9 +120,16 @@ class OfbQtMainWindow(Ui_OfbMainWindowDesign, IOfbMainWindow):
         if self.ctx.ofb.role == "standalone":
             self._attach_module(self.tr("Select device"), OfbQtChooseDeviceModule(self.tabs.root, self.ctx))
 
+        # Persistent home page, including while the headset is disconnected.
+        self.tabs.add_section(self.tr("Device"))
+        self.overview_module = OfbQtDeviceOverviewModule(self.tabs.root, self.ctx)
+        self.overview_entry = self._attach_module(self.tr("Device overview"), self.overview_module)
+        self.overview_module.attach_noise_controls(self.anc_root, self.anc_level)
+        self.control_root.setVisible(False)
+
         # Device-related modules
         self.device_section = self.tabs.add_section("")
-        self._attach_module(self.tr("Device info"), OfbQtDeviceInfoModule(self.tabs.root, self.ctx))
+        self.device_info_entry = self._attach_module(self.tr("Device info"), OfbQtDeviceInfoModule(self.tabs.root, self.ctx))
         self._attach_module(self.tr("Dual-connect"), OfbQtDualConnectModule(self.tabs.root, self.ctx))
         self._attach_module(self.tr("Gestures"), OfbQtGesturesModule(self.tabs.root, self.ctx))
         self._attach_module(self.tr("Sound quality"), OfbQtSoundQualityModule(self.tabs.root, self.ctx))
@@ -81,9 +137,12 @@ class OfbQtMainWindow(Ui_OfbMainWindowDesign, IOfbMainWindow):
 
         # App-related modules
         self.tabs.add_section(self.tr("Application"))
+        self.tray_battery_entry = None
         if ConfigLock.owned:
             self._attach_module(self.tr("User interface"), OfbQtUiSettingsModule(self.tabs.root, self.ctx))
-            self._attach_module(self.tr("Tray battery"), OfbQtTrayBatteryModule(self.tabs.root, self.ctx))
+            self.tray_battery_entry = self._attach_module(
+                self.tr("Tray battery"), OfbQtTrayBatteryModule(self.tabs.root, self.ctx)
+            )
             self._attach_module(self.tr("Automation"), OfbQtAutomationModule(self.tabs.root, self.ctx))
         if OfbQtHotkeysModule.available():
             self._attach_module(self.tr("Keyboard shortcuts"), OfbQtHotkeysModule(self.tabs.root, self.ctx))
@@ -91,8 +150,17 @@ class OfbQtMainWindow(Ui_OfbMainWindowDesign, IOfbMainWindow):
             self._attach_module(self.tr("Linux-related"), OfbQtLinuxExtrasModule(self.tabs.root, self.ctx))
         self._attach_module(self.tr("About…"), OfbQtAboutModule(self.tabs.root, self.ctx))
 
+        self.overview_module.set_navigation_callbacks(
+            lambda *_: self._activate_entry(self.device_info_entry),
+            lambda *_: self._activate_entry(self.tray_battery_entry),
+            tray_enabled=self.tray_battery_entry is not None,
+        )
+
         # Finish
-        self.default_tab = 2, 0
+        self.default_tab = (
+            self.overview_entry.section.index,
+            self.overview_entry.section.items.index(self.overview_entry),
+        )
         self.tabs.finalize_list()
         self.tabs.set_active_tab(*self.default_tab)
 
@@ -173,9 +241,24 @@ class OfbQtMainWindow(Ui_OfbMainWindowDesign, IOfbMainWindow):
         self._update_check_task = asyncio.create_task(self.ctx.updater_service.check_now())
 
     def _attach_module(self, label: str, module: OfbQtCommonModule):
+        if not isinstance(module, OfbQtDeviceOverviewModule):
+            module.setProperty("secondarySettingsPage", "true")
+            page_layout = module.layout()
+            if page_layout is not None:
+                page_layout.setContentsMargins(24, 22, 24, 22)
+                page_layout.setSpacing(16)
+            module.style().unpolish(module)
+            module.style().polish(module)
+
         entry = self.tabs.add_tab(label, module)
         self._ui_modules.append(module)
         module.list_item = entry.list_item
+        return entry
+
+    def _activate_entry(self, entry):
+        if entry is None or not entry.section.root.isVisible():
+            return
+        self.tabs.set_active_tab(entry.section.index, entry.section.items.index(entry))
 
     async def boot(self):
         async with qt_error_handler("OfbQtMain_Boot", self.ctx):

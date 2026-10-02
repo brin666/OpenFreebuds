@@ -17,6 +17,8 @@
 </p>
 </div>
 
+> **FreeBuds 7i 适配版：** 本仓库基于[开源项目 OpenFreebuds](https://github.com/melianmiko/OpenFreebuds)二次创作，并遵循 GPL-3.0。当前为 HUAWEI FreeBuds 7i 增加电量读取适配，可显示左耳、右耳和充电盒电量；其他 7i 控制功能尚未验证。
+
 OpenFreebuds 让你在 PC 上直接控制华为 FreeBuds 等无线耳机的各项设置。查看精确电量、切换降噪模式、调节内置均衡器、更改手势操作——无需安装手机应用即可在电脑上完成所有设备内设置。
 
 功能特点
@@ -41,6 +43,7 @@ OpenFreebuds 让你在 PC 上直接控制华为 FreeBuds 等无线耳机的各�
   - **HONOR Earbuds 2 / 2 SE / 2 Lite** 通用
 - [HUAWEI FreeBuds 5i](./docs/devices/HUAWEI_FreeBuds_5i.md)
 - [HUAWEI FreeBuds 6i](./docs/devices/HUAWEI_FreeBuds_6i.md)
+- [HUAWEI FreeBuds 7i](./docs/devices/HUAWEI_FreeBuds_7i.md)（仅电量读取）
 - [HUAWEI FreeBuds Pro](./docs/devices/HUAWEI_FreeBuds_Pro.md)
 - [HUAWEI FreeBuds Pro 2](./docs/devices/HUAWEI_FreeBuds_Pro_2.md)
 - [HUAWEI FreeBuds Pro 3](./docs/devices/HUAWEI_FreeBuds_Pro_3.md)

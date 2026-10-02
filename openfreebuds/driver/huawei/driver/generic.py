@@ -113,16 +113,28 @@ class OfbDriverHuaweiGeneric(OfbDriverSppGeneric):
                 await asyncio.sleep(2)
 
     async def __recv_pacakge(self, reader: asyncio.StreamReader):
-        heading = await reader.read(4)
-        if len(heading) == 0:
-            log.debug("Got empty package, seems like socked is closed")
-            raise ConnectionResetError
+        try:
+            heading = await reader.readexactly(4)
+        except asyncio.IncompleteReadError as error:
+            log.debug("Got incomplete package header, seems like socket is closed")
+            raise ConnectionResetError from error
+
         if heading[0] == 0x5A:
             length = int.from_bytes(heading[1:3], byteorder="big")
-            if length < 4:
-                await reader.read(length)
-            else:
-                pkg = heading + await reader.read(length)
+            if length < 3:
+                log.info(f"Got invalid package length {length}, stopping recv loop")
+                raise ConnectionResetError
+
+            try:
+                # The length field counts the command/body plus one byte; two
+                # CRC bytes are also present after the four-byte header.
+                remainder = await reader.readexactly(length + 1)
+            except asyncio.IncompleteReadError as error:
+                log.debug("Got incomplete package body, seems like socket is closed")
+                raise ConnectionResetError from error
+
+            if length >= 4:
+                pkg = heading + remainder
                 await self._handle_raw_pkg(pkg)
 
     def _add_on_package_handler(self, handler):

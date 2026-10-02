@@ -486,12 +486,12 @@
     <message>
         <location filename="../../app/module/gestures.py" line="58" />
         <source>Increase volume</source>
-        <translation type="unfinished" />
+        <translation>增大音量</translation>
     </message>
     <message>
         <location filename="../../app/module/gestures.py" line="59" />
         <source>Decrease volume</source>
-        <translation type="unfinished" />
+        <translation>减小音量</translation>
     </message>
     <message>
         <location filename="../../app/module/gestures.py" line="60" />
@@ -696,6 +696,16 @@
 </context><context>
     <name>OfbQtMainWindow</name>
     <message>
+        <location filename="../../app/main.py" />
+        <source>Device</source>
+        <translation>设备</translation>
+    </message>
+    <message>
+        <location filename="../../app/main.py" />
+        <source>Device overview</source>
+        <translation>设备概览</translation>
+    </message>
+    <message>
         <location filename="../../app/main.py" line="72" />
         <source>Select device</source>
         <translation>选择设备</translation>
@@ -738,7 +748,7 @@
     <message>
         <location filename="../../app/main.py" line="86" />
         <source>Tray battery</source>
-        <translation type="unfinished" />
+        <translation>托盘电量</translation>
     </message>
     <message>
         <location filename="../../app/main.py" line="87" />
@@ -981,75 +991,75 @@
     <message>
         <location filename="../../app/module/tray_battery.py" line="25" />
         <source>Show battery percentages in the system tray</source>
-        <translation type="unfinished" />
+        <translation>在系统托盘中显示电量百分比</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="53" />
         <location filename="../../app/module/tray_battery.py" line="30" />
         <source>Left earbud</source>
-        <translation type="unfinished" />
+        <translation>左耳机</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="53" />
         <location filename="../../app/module/tray_battery.py" line="30" />
         <source>Right earbud</source>
-        <translation type="unfinished" />
+        <translation>右耳机</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="54" />
         <location filename="../../app/module/tray_battery.py" line="31" />
         <source>Charging case</source>
-        <translation type="unfinished" />
+        <translation>充电盒</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="33" />
         <source>Customize indicator</source>
-        <translation type="unfinished" />
+        <translation>自定义电量指示器</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="36" />
         <source>Text color</source>
-        <translation type="unfinished" />
+        <translation>文字颜色</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="37" />
         <source>Background color</source>
-        <translation type="unfinished" />
+        <translation>背景颜色</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="42" />
         <source>Text size (100% = largest that fits)</source>
-        <translation type="unfinished" />
+        <translation>文字大小（100% 表示可容纳的最大尺寸）</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="44" />
         <source>Normal</source>
-        <translation type="unfinished">标准</translation>
+        <translation>标准</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="45" />
         <source>Bold</source>
-        <translation type="unfinished" />
+        <translation>粗体</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="46" />
         <source>Font weight</source>
-        <translation type="unfinished" />
+        <translation>字体粗细</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="48" />
         <source>Transparent background</source>
-        <translation type="unfinished" />
+        <translation>透明背景</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="50" />
         <source>Preview</source>
-        <translation type="unfinished" />
+        <translation>预览</translation>
     </message>
     <message>
         <location filename="../../app/module/tray_battery.py" line="65" />
         <source>Changes apply immediately. Icons appear when battery levels are available. On Windows, check the hidden icons (^) menu and drag the icons onto the taskbar.</source>
-        <translation type="unfinished" />
+        <translation>更改会立即生效。获取到电量后会显示图标。在 Windows 上，请打开隐藏图标（^）菜单，并将图标拖到任务栏。</translation>
     </message>
 </context><context>
     <name>OfbQtTrayMenu</name>
@@ -1240,17 +1250,17 @@
     <message>
         <location filename="../../tray/main.py" line="133" />
         <source>Left earbud</source>
-        <translation type="unfinished" />
+        <translation>左耳机</translation>
     </message>
     <message>
         <location filename="../../tray/main.py" line="134" />
         <source>Right earbud</source>
-        <translation type="unfinished" />
+        <translation>右耳机</translation>
     </message>
     <message>
         <location filename="../../tray/main.py" line="135" />
         <source>Charging case</source>
-        <translation type="unfinished" />
+        <translation>充电盒</translation>
     </message>
 </context><context>
     <name>ShortcutName</name>
@@ -1299,4 +1309,48 @@
         <source>Enable low-latency mode</source>
         <translation>启用低延迟模式</translation>
     </message>
+</context>
+<context>
+    <name>OfbQtDeviceOverviewModule</name>
+    <message><source>Device overview</source><translation>设备概览</translation></message>
+    <message><source>Your earbuds and case at a glance</source><translation>一眼查看耳机与充电盒电量</translation></message>
+    <message><source>Profile selected automatically</source><translation>配置已自动匹配</translation></message>
+    <message><source>Compatible profile: FreeBuds 6i</source><translation>兼容配置：FreeBuds 6i Profile</translation></message>
+    <message><source>No device connected</source><translation>尚未连接设备</translation></message>
+    <message><source>Connected device</source><translation>已连接设备</translation></message>
+    <message><source>Connected</source><translation>已连接</translation></message>
+    <message><source>Connecting…</source><translation>连接中…</translation></message>
+    <message><source>Connection failed</source><translation>连接失败</translation></message>
+    <message><source>Not connected</source><translation>未连接</translation></message>
+    <message><source>Connect a supported device to begin</source><translation>连接支持的耳机以开始使用</translation></message>
+    <message><source>Battery status</source><translation>电量状态</translation></message>
+    <message><source>Battery synced</source><translation>电量已同步</translation></message>
+    <message><source>Waiting for battery data</source><translation>等待电量数据</translation></message>
+    <message><source>Connect earbuds to see battery levels</source><translation>连接耳机后即可查看电量</translation></message>
+    <message><source>Temporarily unavailable</source><translation>暂不可用</translation></message>
+    <message><source>Left earbud</source><translation>左耳</translation></message>
+    <message><source>Right earbud</source><translation>右耳</translation></message>
+    <message><source>Charging case</source><translation>充电盒</translation></message>
+    <message><source>Earbud</source><translation>耳机</translation></message>
+    <message><source>Earbud battery</source><translation>耳机电量</translation></message>
+    <message><source>Connection overview</source><translation>连接概况</translation></message>
+    <message><source>Connection</source><translation>连接状态</translation></message>
+    <message><source>Bluetooth address</source><translation>蓝牙地址</translation></message>
+    <message><source>Battery fields</source><translation>电量项目</translation></message>
+    <message><source>Waiting for connection</source><translation>等待连接</translation></message>
+    <message><source>Shortcuts</source><translation>常用入口</translation></message>
+    <message><source>Device information</source><translation>设备信息</translation></message>
+    <message><source>Tray battery</source><translation>托盘电量</translation></message>
+    <message><source>Noise control</source><translation>降噪控制</translation></message>
+    <message><source>Battery levels are shown as reported by the connected device.</source><translation>电量根据已连接设备上报状态显示。</translation></message>
+    <message><source>Tray settings are managed by the running instance</source><translation>托盘设置由当前运行实例管理</translation></message>
+</context>
+<context>
+    <name>BatteryTile</name>
+    <message><source>Waiting for connection</source><translation>等待连接</translation></message>
+    <message><source>Waiting for battery data</source><translation>等待电量数据</translation></message>
+    <message><source>Temporarily unavailable</source><translation>暂不可用</translation></message>
+    <message><source>Full</source><translation>电量充足</translation></message>
+    <message><source>Low battery</source><translation>电量较低</translation></message>
+    <message><source>Battery good</source><translation>电量良好</translation></message>
 </context></TS>
